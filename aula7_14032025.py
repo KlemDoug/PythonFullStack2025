@@ -33,14 +33,37 @@ for i in range(1, 11):
 # 4. Números Pares com FOR:
 # Peça ao usuário um número e mostre todos os números pares de 1 até ele.
 
+numero = int(input("Digite um número para ver os pares até ele: "))
+for i in range(2, numero + 1, 2):
+    print(i)
+
 
 # 5. Fatorial com WHILE:
 # Peça ao usuário um número e calcule o fatorial dele.
+
+numero = int(input("Digite um número para calcular o fatorial: "))
+fatorial = 1
+i = 1
+while i <= numero:
+    fatorial *= i
+    i += 1
+print(f"Fatorial de {numero}: {fatorial}")
 
 
 # 6. Validação de Entrada com WHILE:
 # Peça ao usuário um número maior que 10. Se ele digitar um número inválido, peça novamente.
 
+numero = 0
+while numero <= 10:
+    numero = int(input("Digite um número maior que 10: "))
+print("Número válido:", numero)
+
 
 # 7. Desenho com Loops Aninhados: (DESAFIO)
 # Peça ao usuário o tamanho de um quadrado e desenhe-o com asteriscos (*).
+
+tamanho = int(input("Digite o tamanho do quadrado: "))
+for i in range(tamanho):
+    for j in range(tamanho):
+        print("*", end=" ")
+    print()
