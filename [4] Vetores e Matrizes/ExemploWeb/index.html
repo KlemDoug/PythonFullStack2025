@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grid de Produtos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f4f4f4;
+    }
+
+    #grid-produtos {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .produto {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      padding: 20px;
+      text-align: center;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .produto img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    .produto h3 {
+      margin: 10px 0;
+      font-size: 1.2em;
+    }
+
+    .produto p {
+      color: #e67e22;
+      font-size: 1.1em;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Produtos em Destaque</h1>
+  <div id="grid-produtos"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
