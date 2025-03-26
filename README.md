@@ -40,7 +40,7 @@ PythonFullStack2025/
 │   ├── atividades.aula11.ipynb
 │   └── aula11_24032025.js
 ├── 6-projeto-final/
-│   └── proffinal.ipynb
+│   └── projfinal.ipynb
 └── README.md
 ```
 
@@ -54,4 +54,4 @@ PythonFullStack2025/
 | **Jupyter Notebook** | Documentação interativa | .ipynb |
 | **Git** | Controle de versão | Todo o projeto |
 
-<p align="center"> © 2025 SENAC RJ - Python FullStack Nova Iguaçu | Desenvolvido com ❤️ para os futuros programadores 🚀🚀🚀 </p>
+<p align="center">  2025 SENAC RJ - Python FullStack Nova Iguaçu | Desenvolvido com ❤️ para os futuros programadores 🚀🚀🚀 </p>
