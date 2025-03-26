@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Escolar JavaScript</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .card h3 {
+            margin-top: 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px 0;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .console {
+            background-color: #333;
+            color: #f0f0f0;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            height: 200px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .tab {
+            padding: 10px 20px;
+            background-color: #eee;
+            cursor: pointer;
+            margin-right: 5px;
+            border-radius: 5px 5px 0 0;
+        }
+        .tab.active {
+            background-color: #3498db;
+            color: white;
+        }
+        .nota-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        .media {
+            font-weight: bold;
+            color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sistema Escolar JavaScript</h1>
+    
+    <div class="container">
+        <h2>Escola: <span id="escola-nome">Escola Municipal JavaScript</span></h2>
+        
+        <div class="tabs">
+            <div class="tab active" onclick="openTab('cadastro')">Cadastros</div>
+            <div class="tab" onclick="openTab('relatorios')">Relatórios</div>
+            <div class="tab" onclick="openTab('console')">Console</div>
+        </div>
+        
+        <div id="cadastro" class="tab-content active">
+            <div class="grid">
+                <div class="card">
+                    <h3>Cadastrar Aluno</h3>
+                    <form id="form-aluno">
+                        <label for="aluno-nome">Nome:</label>
+                        <input type="text" id="aluno-nome" required>
+                        
+                        <label for="aluno-matricula">Matrícula:</label>
+                        <input type="text" id="aluno-matricula" required>
+                        
+                        <label for="aluno-curso">Curso:</label>
+                        <input type="text" id="aluno-curso" required>
+                        
+                        <button type="submit">Cadastrar Aluno</button>
+                    </form>
+                </div>
+                
+                <div class="card">
+                    <h3>Adicionar Nota</h3>
+                    <form id="form-nota">
+                        <label for="nota-aluno">Aluno:</label>
+                        <select id="nota-aluno" required></select>
+                        
+                        <label for="nota-valor">Nota (0-10):</label>
+                        <input type="number" id="nota-valor" min="0" max="10" step="0.1" required>
+                        
+                        <button type="submit">Adicionar Nota</button>
+                    </form>
+                </div>
+                
+                <div class="card">
+                    <h3>Cadastrar Professor</h3>
+                    <form id="form-professor">
+                        <label for="professor-nome">Nome:</label>
+                        <input type="text" id="professor-nome" required>
+                        
+                        <label for="professor-departamento">Departamento:</label>
+                        <input type="text" id="professor-departamento" required>
+                        
+                        <button type="submit">Cadastrar Professor</button>
+                    </form>
+                </div>
+                
+                <div class="card">
+                    <h3>Atribuir Disciplina</h3>
+                    <form id="form-atribuir-disciplina">
+                        <label for="atribuir-professor">Professor:</label>
+                        <select id="atribuir-professor" required></select>
+                        
+                        <label for="atribuir-disciplina-nome">Nome da Disciplina:</label>
+                        <input type="text" id="atribuir-disciplina-nome" required>
+                        
+                        <button type="submit">Atribuir Disciplina</button>
+                    </form>
+                </div>
+                
+                <div class="card">
+                    <h3>Cadastrar Disciplina</h3>
+                    <form id="form-disciplina">
+                        <label for="disciplina-nome">Nome:</label>
+                        <input type="text" id="disciplina-nome" required>
+                        
+                        <label for="disciplina-codigo">Código:</label>
+                        <input type="text" id="disciplina-codigo" required>
+                        
+                        <label for="disciplina-professor">Professor:</label>
+                        <select id="disciplina-professor" required></select>
+                        
+                        <button type="submit">Cadastrar Disciplina</button>
+                    </form>
+                </div>
+                
+                <div class="card">
+                    <h3>Matricular Aluno em Disciplina</h3>
+                    <form id="form-matricular">
+                        <label for="matricular-aluno">Aluno:</label>
+                        <select id="matricular-aluno" required></select>
+                        
+                        <label for="matricular-disciplina">Disciplina:</label>
+                        <select id="matricular-disciplina" required></select>
+                        
+                        <button type="submit">Matricular</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div id="relatorios" class="tab-content">
+            <div class="grid">
+                <div class="card">
+                    <h3>Alunos</h3>
+                    <div id="lista-alunos"></div>
+                </div>
+                
+                <div class="card">
+                    <h3>Professores</h3>
+                    <div id="lista-professores"></div>
+                </div>
+                
+                <div class="card">
+                    <h3>Disciplinas</h3>
+                    <div id="lista-disciplinas"></div>
+                </div>
+            </div>
+            
+            <div class="card" style="margin-top: 20px;">
+                <h3>Boletim por Disciplina</h3>
+                <select id="selecionar-disciplina" onchange="gerarBoletim()"></select>
+                <div id="boletim-disciplina" style="margin-top: 15px;"></div>
+            </div>
+            
+            <button onclick="gerarRelatorioGeral()" style="margin-top: 20px;">Gerar Relatório Geral</button>
+        </div>
+        
+        <div id="console" class="tab-content">
+            <h3>Console do Sistema</h3>
+            <div class="console" id="system-console"></div>
+            <button onclick="limparConsole()">Limpar Console</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Função para alternar entre as abas
+        function openTab(tabName) {
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+            
+            const tabs = document.getElementsByClassName('tab');
+            for (let i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove('active');
+            }
+            
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        // Inicializar a página
+        window.onload = function() {
+            // Configurar event listeners para os formulários
+            document.getElementById('form-aluno').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const nome = document.getElementById('aluno-nome').value;
+                const matricula = document.getElementById('aluno-matricula').value;
+                const curso = document.getElementById('aluno-curso').value;
+                
+                const novoAluno = new Aluno(nome, matricula, curso);
+                minhaEscola.matricularAluno(novoAluno);
+                
+                this.reset();
+                atualizarSelectAlunos();
+            });
+
+            document.getElementById('form-nota').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const matricula = document.getElementById('nota-aluno').value;
+                const nota = parseFloat(document.getElementById('nota-valor').value);
+                
+                const aluno = minhaEscola.alunos.find(a => a.matricula === matricula);
+                if (aluno) {
+                    aluno.adicionarNota(nota);
+                    atualizarListaAlunos();
+                    atualizarListaDisciplinas();
+                }
+                
+                this.reset();
+            });
+
+            document.getElementById('form-professor').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const nome = document.getElementById('professor-nome').value;
+                const departamento = document.getElementById('professor-departamento').value;
+                
+                const novoProfessor = new Professor(nome, departamento);
+                minhaEscola.contratarProfessor(novoProfessor);
+                
+                this.reset();
+                atualizarSelectProfessores();
+            });
+
+            document.getElementById('form-atribuir-disciplina').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const nomeProfessor = document.getElementById('atribuir-professor').value;
+                const disciplina = document.getElementById('atribuir-disciplina-nome').value;
+                
+                const professor = minhaEscola.professores.find(p => p.nome === nomeProfessor);
+                if (professor) {
+                    professor.atribuirDisciplina(disciplina);
+                    atualizarListaProfessores();
+                }
+                
+                this.reset();
+            });
+
+            document.getElementById('form-disciplina').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const nome = document.getElementById('disciplina-nome').value;
+                const codigo = document.getElementById('disciplina-codigo').value;
+                const nomeProfessor = document.getElementById('disciplina-professor').value;
+                
+                const professor = minhaEscola.professores.find(p => p.nome === nomeProfessor);
+                if (professor) {
+                    const novaDisciplina = new Disciplina(nome, codigo, professor);
+                    minhaEscola.cadastrarDisciplina(novaDisciplina);
+                    atualizarSelectDisciplinas();
+                }
+                
+                this.reset();
+            });
+
+            document.getElementById('form-matricular').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const matricula = document.getElementById('matricular-aluno').value;
+                const codigoDisciplina = document.getElementById('matricular-disciplina').value;
+                
+                const aluno = minhaEscola.alunos.find(a => a.matricula === matricula);
+                const disciplina = minhaEscola.disciplinas.find(d => d.codigo === codigoDisciplina);
+                
+                if (aluno && disciplina) {
+                    disciplina.matricularAluno(aluno);
+                    atualizarListaDisciplinas();
+                    atualizarSelectDisciplinas();
+                }
+                
+                this.reset();
+            });
+
+            // Inicializar dados de demonstração
+            inicializarDadosDemonstracao();
+        };
+    </script>
+</body>
+</html>
