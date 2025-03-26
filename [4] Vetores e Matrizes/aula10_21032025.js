@@ -93,3 +93,56 @@ atirar(0, 3); // Saída: "Você acertou um navio!"
 atirar(1, 1); // Saída: "Você acertou um navio!"
 atirar(4, 4); // Saída: "Você acertou um navio!"
 atirar(2, 2); // Saída: "Você atingiu a água."
+
+// Atualização com POO - Batalha Naval (26/03/2025)
+class BatalhaNaval {
+  constructor(tamanho = 8) {
+    this.tamanho = tamanho;
+    this.tabuleiro = Array.from({ length: tamanho }, () => 
+      Array.from({ length: tamanho }, () => 'Água'));
+    this.naviosRestantes = 5;
+    
+    // Posicionar navios aleatoriamente
+    for (let i = 0; i < this.naviosRestantes; i++) {
+      let linha, coluna;
+      do {
+        linha = Math.floor(Math.random() * tamanho);
+        coluna = Math.floor(Math.random() * tamanho);
+      } while (this.tabuleiro[linha][coluna] === 'Navio');
+      
+      this.tabuleiro[linha][coluna] = 'Navio';
+    }
+  }
+
+  atirar(linha, coluna) {
+    if (linha < 0 || linha >= this.tamanho || coluna < 0 || coluna >= this.tamanho) {
+      return 'TIRO_INVALIDO';
+    }
+
+    if (this.tabuleiro[linha][coluna] === 'Navio') {
+      this.tabuleiro[linha][coluna] = 'Acerto';
+      this.naviosRestantes--;
+      return this.naviosRestantes === 0 ? 'VITÓRIA' : 'ACERTOU';
+    } else if (this.tabuleiro[linha][coluna] === 'Água') {
+      this.tabuleiro[linha][coluna] = 'Erro';
+      return 'ERROU';
+    } else {
+      return 'TIRO_REPETIDO';
+    }
+  }
+
+  exibirTabuleiro(mostrarNavios = false) {
+    for (let linha of this.tabuleiro) {
+      let linhaExibicao = linha.map(celula => {
+        if (celula === 'Navio' && !mostrarNavios) return 'Água';
+        return celula;
+      });
+      console.log(linhaExibicao.join(' | '));
+    }
+  }
+}
+
+const jogoNaval = new BatalhaNaval();
+jogoNaval.exibirTabuleiro(true);
+
+/////////////////////////////////////////////////////////////////////////////
