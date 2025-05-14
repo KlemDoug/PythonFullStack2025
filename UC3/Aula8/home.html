@@ -1,0 +1,70 @@
+{% load static %}  <!-- Carrega a tag static para arquivos estáticos -->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Página Inicial{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'meu_app/css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{% static 'meu_app/img/logo.png' %}" alt="Logo">
+        </div>
+        
+        <!-- Navegação principal com URLs Django -->
+        <nav class="main-nav">
+            <ul>
+                <li class="active">
+                    <a href="{% url 'home' %}">Home</a>
+                </li>
+                <li>
+                    <a href="{% url 'produtos' %}">Produtos</a>
+                </li>
+                <li>
+                    <a href="{% url 'contatos' %}">Contato</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li>
+                    <a href="{% url 'painel' %}">Painel</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        <!-- Conteúdo principal -->
+        <section class="banner">
+            <h1>Bem-vindo ao nosso site</h1>
+            <p>Conheça nossos <a href="{% url 'produtos' %}">produtos</a> ou <a href="{% url 'contatos' %}">fale conosco</a></p>
+        </section>
+
+        <section class="destaques">
+            <h2>Destaques</h2>
+            <div class="grid">
+                {% for produto in destaques %}
+                <div class="card">
+                    <h3>{{ produto.nome }}</h3>
+                    <p>{{ produto.descricao|truncatechars:100 }}</p>
+                </div>
+                {% empty %}
+                <p>Nenhum destaque no momento.</p>
+                {% endfor %}
+            </div>
+        </section>
+        {% endblock %}
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a Política de Privacidade</a>
+            <a Termos de Uso</a>
+        </div>
+        <p>&copy; {% now "Y" %} {{ SITE_NAME }}. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>
