@@ -1,0 +1,48 @@
+{% extends 'meuapp/base.html' %}  <!-- Mantido: Herda do template base -->
+
+{% block title %}Página Inicial{% endblock %}  <!-- Mantido: Define o título da página -->
+
+{% block content %}
+<!-- Início da seção principal - Adicionado container do Bootstrap -->
+<div class="container mt-4">
+    <!-- Seção Banner - Atualizada com classes do Bootstrap -->
+    <section class="banner text-center p-5 bg-light rounded-3 mb-4">
+        <!-- Adicionado classes de tipografia do Bootstrap -->
+        <h1 class="display-4 fw-bold">Bem-vindo ao nosso site</h1>
+        <p class="lead">Conheça nossos 
+            <!-- Links estilizados com Bootstrap -->
+            <a href="{% url 'produtos' %}" class="text-decoration-none fw-bold">produtos</a> ou 
+            <a href="{% url 'contatos' %}" class="text-decoration-none fw-bold">fale conosco</a>
+        </p>
+    </section>
+
+    <!-- Seção Destaques - Atualizada com sistema de grid do Bootstrap -->
+    <section class="destaques mb-5">
+        <h2 class="text-center mb-4">Destaques</h2>  <!-- Adicionado margem inferior -->
+        
+        <!-- Substituído div.grid por row do Bootstrap -->
+        <div class="row g-4">
+            {% for produto in destaques %}
+            <!-- Cards com Bootstrap - col-md-4 para 3 cards por linha em desktop -->
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">  <!-- Adicionado sombra e altura fixa -->
+                    <div class="card-body">
+                        <h3 class="card-title h5">{{ produto.nome }}</h3>  <!-- Título ajustado -->
+                        <p class="card-text">{{ produto.descricao|truncatechars:100 }}</p>
+                        <!-- Adicionado botão com Bootstrap -->
+                        <a href="#" class="btn btn-primary">Ver detalhes</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <!-- Mensagem de empty estilizada -->
+            <div class="col-12">
+                <div class="alert alert-info" role="alert">
+                    Nenhum destaque no momento.
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'meuapp/base.html' %}
+<!--
+    ALTERAÇÃO: Adicionado extends para herdar do template base
+    MOTIVO: Elimina código repetitivo (header, footer, etc.) e centraliza estilos
+-->
+
+{% block content %}
+<!-- ALTERAÇÃO: Todo o conteúdo agora está dentro de um bloco nomeado
+     MOTIVO: Permite herdar a estrutura base mantendo apenas o conteúdo específico -->
+
+    <h2>Nossos Produtos</h2>
+    <!-- ALTERAÇÃO: Substituída a div.produtos-lista por row do Bootstrap
+         MOTIVO: Utilizar o sistema de grid responsivo do Bootstrap -->
+    <div class="row">
+        {% for produto in produtos %}
+            <!-- ALTERAÇÃO: Adicionado col-md-4 mb-4 para layout responsivo
+                 MOTIVO: Cria 3 colunas em desktop (md) com espaçamento (mb-4) -->
+            <div class="col-md-4 mb-4">
+                <!-- ALTERAÇÃO: Substituída div.produto por card do Bootstrap
+                     MOTIVO: Componente pré-estilizado mais profissional -->
+                <div class="card">
+                    <div class="card-body">
+                        <!-- ALTERAÇÃO: h3 substituído por h5 com classe card-title
+                             MOTIVO: Melhor hierarquia visual dentro do card -->
+                        <h5 class="card-title">{{ produto.nome }}</h5>
+                        <!-- ALTERAÇÃO: Adicionada classe card-text
+                             MOTIVO: Estilização consistente para textos no card -->
+                        <p class="card-text">{{ produto.descricao }}</p>
+                        <!-- ALTERAÇÃO: span substituído por p com classe text-success
+                             MOTIVO: Melhor destaque visual para o preço -->
+                        <p class="text-success">R$ {{ produto.preco }}</p>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+        <!-- ALTERAÇÃO: Mensagem de empty movida para dentro do grid
+             MOTIVO: Manter consistência estrutural -->
+        <div class="col-12">
+            <div class="alert alert-info">Nenhum produto disponível no momento.</div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+<!--
+    REMOÇÕES IMPORTANTES:
+    1. Todo o DOCTYPE, html, head e body foram removidos
+       MOTIVO: Já estão no template base (base.html)
+    2. Estilos CSS inline foram removidos
+       MOTIVO: Agora são controlados pelo Bootstrap
+    3. Header e footer removidos
+       MOTIVO: Herdados do template base
+    4. Classes .produto e .destaque removidas
+       MOTIVO: Substituídas por componentes do Bootstrap
+-->
