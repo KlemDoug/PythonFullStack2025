@@ -1,0 +1,50 @@
+{% extends 'meuapp/base.html' %}
+
+{% block title %}Página Inicial{% endblock %}
+
+{% block content %}
+
+<!-- Header personalizado para a home -->
+{% with "Bem-vindo ao nosso site" as header_title %}
+{% with "Conheça nossos produtos ou fale conosco" as header_subtitle %}
+    {% include 'meuapp/partials/_header.html' %}
+{% endwith %}
+{% endwith %}
+
+<div class="container mt-4">
+    <section class="banner text-center p-5 bg-light rounded-3 mb-4">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <h1 class="display-4 fw-bold">Sua jornada começa aqui</h1>
+                <p class="lead">
+                    <a href="{% url 'produtos' %}" class="btn btn-primary btn-lg mx-2">Ver Produtos</a>
+                    <a href="{% url 'contatos' %}" class="btn btn-outline-secondary btn-lg mx-2">Contato</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="destaques mb-5">
+        <h2 class="text-center mb-4">Destaques</h2>
+        <div class="row g-4">
+            {% for produto in destaques %}
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body d-flex flex-column">
+                        <h3 class="card-title h5">{{ produto.nome }}</h3>
+                        <p class="card-text flex-grow-1">{{ produto.descricao|truncatechars:100 }}</p>
+                        <a href="#" class="btn btn-primary align-self-start">Ver detalhes</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="alert alert-info" role="alert">
+                    Nenhum destaque no momento.
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+{% endblock %}

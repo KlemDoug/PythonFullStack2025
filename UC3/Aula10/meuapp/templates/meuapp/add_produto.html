@@ -1,0 +1,15 @@
+{% extends 'meuapp/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Adicionar Produto</h2>
+    <form method="post" enctype="multipart/form-data">  <!-- Atributo ESSENCIAL -->
+        {% csrf_token %}
+        
+        <!-- Renderiza todos os campos do formulário -->
+        {{ form.as_p }}
+        
+        <button type="submit" class="btn btn-primary">Salvar</button>
+    </form>
+</div>
+{% endblock %}

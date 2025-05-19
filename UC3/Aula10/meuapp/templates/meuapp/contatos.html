@@ -1,0 +1,54 @@
+{% extends 'meuapp/base.html' %}
+
+{% block title %}Fale Conosco{% endblock %}
+
+{% block content %}
+
+<!-- Header personalizado para contatos -->
+{% with "Fale Conosco" as header_title %}
+{% with "Estamos aqui para ajudar" as header_subtitle %}
+    {% include 'meuapp/partials/_header.html' %}
+{% endwith %}
+{% endwith %}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="h4 card-title">Informações de Contato</h2>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="bi bi-envelope me-2"></i> contato@empresa.com</li>
+                        <li class="mb-2"><i class="bi bi-phone me-2"></i> (21) 1234-5678</li>
+                        <li><i class="bi bi-clock me-2"></i> Seg-Sex: 9h às 18h</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="h4 card-title">Formulário</h2>
+                    <form method="post" class="mt-3">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="nome" class="form-label">Nome</label>
+                            <input type="text" class="form-control" id="nome" name="nome" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="mensagem" class="form-label">Mensagem</label>
+                            <textarea class="form-control" id="mensagem" name="mensagem" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enviar Mensagem</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

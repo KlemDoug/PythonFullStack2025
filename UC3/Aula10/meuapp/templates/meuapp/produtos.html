@@ -1,0 +1,38 @@
+{% extends 'meuapp/base.html' %}
+
+{% block title %}Nossos Produtos{% endblock %}
+
+{% block content %}
+
+<!-- Header personalizado para produtos -->
+{% with "Nossos Produtos" as header_title %}
+{% with "Conheça nossa linha completa" as header_subtitle %}
+    {% include 'meuapp/partials/_header.html' %}
+{% endwith %}
+{% endwith %}
+
+<div class="container mt-4">
+    <div class="row">
+        {% for produto in produtos %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">{{ produto.nome }}</h5>
+                    <p class="card-text flex-grow-1">{{ produto.descricao }}</p>
+                    <div class="mt-auto">
+                        <p class="text-success fw-bold mb-2">R$ {{ produto.preco }}</p>
+                        <a href="#" class="btn btn-outline-primary w-100">Detalhes</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-warning">
+                Nenhum produto disponível no momento.
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+<!-- meuapp/templates/meuapp/partials/_scripts.html -->
+<!-- Bootstrap Bundle JS (já incluso no base.html) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Scripts Customizados -->
+<script>
+    // Exemplo: Ativa tooltips do Bootstrap
+    document.addEventListener('DOMContentLoaded', function() {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (element) {
+            return new bootstrap.Tooltip(element)
+        });
+    });
+</script>
