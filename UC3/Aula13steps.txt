@@ -1,0 +1,34 @@
+AULA13:
+
+(feedback aula passada) https://getbootstrap.com.br/docs/4.1/components/alerts/
+
+
+>>>Extensão VSCode para leitura do arquivo db.sqlite3: SQLite Viewer
+
+
+>>>Migração de DB framework (exemplo: do db.sqlite3 para o MySQL):
+
+pip install mysqlclient  # Recomendado (mais eficiente) OU
+pip install pymysql     # Alternativa (se mysqlclient não funcionar)
+
+
+>>>Criação do Banco de Dados no MySQL (exemplo):
+
+CREATE DATABASE nome_do_banco CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+
+>>>Mudança da variável DB no settings.py:
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'nome_do_banco',          # Nome do banco criado no MySQL
+        'USER': 'seu_usuario_mysql',      # Ex.: 'root' (ou um usuário específico)
+        'PASSWORD': 'sua_senha_mysql',    # Senha do usuário
+        'HOST': 'localhost',              # Ou o IP do servidor MySQL
+        'PORT': '3306',                   # Porta padrão do MySQL
+        'OPTIONS': {
+            'charset': 'utf8mb4',        # Suporte para caracteres especiais
+        },
+    }
+}
