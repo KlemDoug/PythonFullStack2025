@@ -1,0 +1,135 @@
+### ** Hospedagem de Projeto Django no PythonAnywhere**  
+
+Este guia detalha **todos os passos** para hospedar um projeto Django no PythonAnywhere, incluindo soluções para erros comuns.  
+
+---
+
+## ** Pré-requisitos**  
+ Conta no [PythonAnywhere](https://www.pythonanywhere.com) (plano gratuito)  
+ Projeto Django funcional localmente  
+ Arquivo `requirements.txt` com as dependências  
+
+---
+
+## ** Passo 1: Preparar o Projeto para Deploy**  
+### **1.1 - Ajuste o `settings.py`**  
+```python
+# settings.py
+ALLOWED_HOSTS = ['seuusuario.pythonanywhere.com', 'localhost']  # Substitua "seuusuario"
+
+# Configuração do banco de dados (SQLite)
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+
+# Arquivos estáticos
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Para coletar estáticos
+```
+
+### **1.2 - Gere o `requirements.txt`**  
+No terminal local:  
+```bash
+pip freeze > requirements.txt
+```
+
+### **1.3 - Envie o Projeto para o PythonAnywhere**  
+- **Opção A (Git):**  
+  ```bash
+  git init
+  git add .
+  git commit -m "Initial commit"
+  git remote add origin https://github.com/seuusuario/meuprojeto.git
+  git push -u origin main
+  ```
+- **Opção B (Upload manual):**  
+  - Compacte a pasta do projeto em **ZIP** (não use RAR).  
+  - No PythonAnywhere, vá em **"Files" > "Upload"** e envie o ZIP.  
+
+---
+
+## ** Passo 2: Configurar o Ambiente no PythonAnywhere**  
+### **2.1 - Extraia o Projeto (se enviou ZIP)**  
+No **console Bash**:  
+```bash
+cd /home/seuusuario/
+unzip meuprojeto.zip -d meuprojeto  # Substitua "meuprojeto.zip"
+```
+
+### **2.2 - Crie um Virtualenv**  
+```bash
+mkvirtualenv meuprojeto --python=/usr/bin/python3.10
+workon meuprojeto  # Ative o ambiente
+pip install -r requirements.txt
+```
+
+---
+
+## ** Passo 3: Configurar o Aplicativo Web**  
+### **3.1 - Crie um Novo Aplicativo**  
+1. Vá em **"Web" > "Add a new web app"**.  
+2. Selecione **"Manual Configuration" (Python 3.X)**.  
+
+### **3.2 - Edite o Arquivo WSGI**  
+Em **"Web" > "WSGI configuration file"**, substitua todo o conteúdo por:  
+```python
+import os
+import sys
+
+path = '/home/seuusuario/meuprojeto'  # Caminho do seu projeto
+if path not in sys.path:
+    sys.path.append(path)
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'meuprojeto.settings'  # Substitua "meuprojeto"
+
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()
+```
+
+### **3.3 - Configure o Banco de Dados**  
+No console Bash:  
+```bash
+touch db.sqlite3
+chmod 664 db.sqlite3  # Permissões de escrita
+python manage.py migrate
+python manage.py createsuperuser  # Opcional
+```
+
+### **3.4 - Colete Arquivos Estáticos**  
+```bash
+python manage.py collectstatic
+```
+
+---
+
+## ** Passo 4: Reinicie o Servidor**  
+- Na aba **"Web"**, clique em **Reload**.  
+- Seu site estará em: **http://seuusuario.pythonanywhere.com**  
+
+---
+
+## ** Solução de Erros Comuns**  
+### ** "OperationalError: attempt to write a readonly database"**  
+```bash
+chmod 664 db.sqlite3
+chown seusuario:www-data db.sqlite3
+```
+
+### ** Página padrão do Django aparece**  
+- Verifique se o `urls.py` está mapeando a URL raiz (`''`) para sua view.  
+
+### ** Arquivos estáticos não carregam**  
+```bash
+python manage.py collectstatic
+```
+
+---
+
+## ** Dicas Finais**  
+- **Nunca faça upload do `db.sqlite3`**: Sempre gere um novo banco no servidor.  
+- **Monitore os logs**: Em **"Web" > "Error log"**.  
+
+--- 
